@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, get_object_or_404, redir
 
 from pybo.models import Question, Answer
 from django.utils import timezone
-from .forms import QuestionForm
+from .forms import QuestionForm, AnswerForm
 
 # Create your views here.
 def index(request):
@@ -30,11 +30,19 @@ def answer_create(request, question_id):
     """
     pybo 답변등록
     """
-    content = request.POST.get('content')
     question = get_object_or_404(Question, pk=question_id)
-    question.answer_set.create(content = content, create_date=timezone.now())
-
-    return redirect('pybo:detail', question_id = question.id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+    if form.is_valid():
+        answer = form.save(commit=False)
+        answer.create_date = timezone.now()
+        answer.question = question
+        answer.save()
+        return redirect('pybo:detail', question_id=question.id)
+    else:
+        form = AnswerForm()
+    context = {'question': question, 'form': form}
+    return render(request, 'pybo/question_detail.html', context)
 
 def question_create(request):
     """
