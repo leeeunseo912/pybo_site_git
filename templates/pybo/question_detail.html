@@ -36,30 +36,16 @@
   {% endfor %}
 
   <div>{{question.content}}</div>
-  {% comment %}
-  <h1>{{question.subject}}</h1>
 
-  <div>{{question.content}}</div>
-
-  <div>
-    <ul>
-      {%for answer in question.answer_set.all%}
-      <li>{{answer.content}}</li>
-      {% endfor%}
-    </ul>
-  </div>
-  {% endcomment %}
 <i class="fas fa-question-circle"></i>
   <form action="{%url 'pybo:answer_create' question.id %}" method="post" class ="my-3">
-    {% csrf_token %}
+    {% csrf_token %} {% include 'error/from_error.html' %}
     <div class="form-group">
-    <textarea name="content" id="content" class = "form-control" rows ="10"></textarea>
+      <textarea name="content" id="content" class = "form-control" rows ="10"></textarea>
     </div>
     <button type="submit" class ="btn btn-primary"><i class="fas fa-share-square"></i>답변 등록</button>
     <a href="{% url 'pybo:index' %}" class = "btn btn-primary"><i class="fas fa-list"></i>목록 보기</a>
 
   </form>
-</div>
-</form>
-</div>
-{% endblock %}
+
+{% endblock content %}
