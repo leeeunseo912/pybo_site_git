@@ -35,9 +35,6 @@
   </div>
   {% endfor %}
 
-  <div>{{question.content}}</div>
-
-<i class="fas fa-question-circle"></i>
   <form action="{%url 'pybo:answer_create' question.id %}" method="post" class ="my-3">
     {% csrf_token %} {% include 'error/from_error.html' %}
     <div class="form-group">
