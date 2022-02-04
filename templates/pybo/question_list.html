@@ -9,6 +9,7 @@
       <tr class="thead-dark">
         <th style="width:60px">번호</th>
         <th>제목</th>
+        <th>글쓴이</th>
         <th style="width.250px">작성일시</th>
       </tr>
     </thead>
@@ -23,7 +24,8 @@
           <span class="badge badge-pill badge-primary">{{question.answer_set.count}}
           {% endif%}
           </td>
-        <td>{{ question.create_date }}</td>
+        <td>{{ question.author.username }}</td> 
+        <td>{{ question.create_date | date:'Y-m-d' }}</td>
       </tr>
       {% endfor %} {% else %}
       <tr>
