@@ -6,12 +6,10 @@
       <div class="d-flex justify-content-end">
         {% if answer.modify_date %}
         <div class="badge badge-light p-2 text-left mx-3">
-        <div class="mb-2">modified at</div>
-        <div><i class="fas fa-clock"></i>{{ answer.modify_date | date:'Y-m-d H:i:s'}}</div>
+          <div class="mb-2">modified at</div>
+          <div><i class="fas fa-clock"></i>{{ answer.modify_date | date:'Y-m-d H:i:s'}}</div>
         </div>
         {% endif %}
-
-       {% include 'pybo/answer_list.html' %}
 
         <div class="badge badge-light p-2 text-left">
           <div class="mb-2">{{answer.author.username}}</div>
@@ -19,12 +17,14 @@
       </div>
     </div>
       {% if request.user == answer.author %}
-      <div class="my-3">
+
       <a href="{% url 'pybo:answer_modify' answer.id %}" class="btn btn-sm btn-outline-secondary">수정</a>
       <a href="#" class="delete btn btn-sm btn-outline-danger" data-uri="{% url 'pybo:answer_delete' answer.id %}">삭제</a>
-    </div>
+
     {% endif %}
+    {% include 'pybo/answer_comment_list.html' %}
   </div>
+</div>
   {% endfor %}
 
 <form action="{%url 'pybo:answer_create' question.id %}" method="post" class ="my-3">
